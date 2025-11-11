@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - MetaLog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .text-primary { color: #2C5282; }
+        .bg-primary { background-color: #4A90E2; }
+        .bg-secondary { background-color: #7ED321; }
+        .bg-user { background-color: #E8F4FD; }
+        .bg-bot { background-color: #F0F9F4; }
+        .typing-indicator { animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        .chat-container { height: calc(100vh - 200px); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-white sticky top-0 z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.history.back()" class="text-gray-600 hover:text-primary">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">M</span>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-semibold text-primary">Conversation</h1>
+                            <p class="text-sm text-gray-500">Step 2 of 3</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="text-sm text-gray-500">2/5 questions</div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Chat Area -->
+    <main class="container mx-auto max-w-4xl px-6 py-6">
+        <div id="chatContainer" class="chat-container overflow-y-auto mb-6 space-y-4">
+            <!-- Bot Message -->
+            <div class="flex items-start space-x-3">
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-sm">M</span>
+                </div>
+                <div class="bg-bot p-4 rounded-2xl rounded-bl-sm max-w-3xl">
+                    <p>Hello! I've reviewed the uploaded homework. I'd like to ask a few gentle questions to better understand the learning patterns. Take your time answering.</p>
+                </div>
+            </div>
+
+            <!-- Example Question -->
+            <div class="flex items-start space-x-3">
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-sm">M</span>
+                </div>
+                <div class="bg-bot p-4 rounded-2xl rounded-bl-sm max-w-3xl">
+                    <p><strong>Question 1 of 5:</strong></p>
+                    <p class="mt-2">How long did the homework session typically take?</p>
+                    <div class="mt-3 space-y-2">
+                        <button class="block w-full text-left p-2 rounded-lg hover:bg-blue-50 transition" onclick="selectOption(this, '15-30 minutes')">15-30 minutes</button>
+                        <button class="block w-full text-left p-2 rounded-lg hover:bg-blue-50 transition" onclick="selectOption(this, '30-60 minutes')">30-60 minutes</button>
+                        <button class="block w-full text-left p-2 rounded-lg hover:bg-blue-50 transition" onclick="selectOption(this, 'Over 60 minutes')">Over 60 minutes</button>
+                        <button class="block w-full text-left p-2 rounded-lg hover:bg-blue-50 transition" onclick="selectOption(this, 'Varies greatly')">Varies greatly</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Message Example -->
+            <div class="flex items-start space-x-3 justify-end hidden" id="userTemplate">
+                <div class="bg-user p-4 rounded-2xl rounded-br-sm max-w-3xl">
+                    <p class="answer-text"></p>
+                </div>
+                <div class="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-sm">U</span>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div id="typingIndicator" class="flex items-start space-x-3 hidden">
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-sm">M</span>
+                </div>
+                <div class="bg-bot p-4 rounded-2xl rounded-bl-sm">
+                    <div class="flex space-x-1">
+                        <div class="w-2 h-2 bg-secondary rounded-full typing-indicator"></div>
+                        <div class="w-2 h-2 bg-secondary rounded-full typing-indicator" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-secondary rounded-full typing-indicator" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 sticky bottom-0">
+            <div class="flex items-end space-x-3">
+                <input type="text" id="messageInput" placeholder="Type your answer here..." 
+                    class="flex-1 outline-none text-lg py-2 px-3" disabled>
+                <button id="sendBtn" class="bg-primary text-white px-6 py-2 rounded-xl font-medium hover:bg-blue-600 transition disabled:bg-gray-400" disabled>
+                    Send
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentQuestion = 0;
+        const questions = [
+            "How long did the homework session typically take?",
+            "Did the student take frequent breaks?",
+            "Was the work environment quiet or noisy?",
+            "Did the student ask for help repeatedly?",
+            "How did the student react to changes in routine?"
+        ];
+
+        function selectOption(button, answer) {
+            document.getElementById('messageInput').value = answer;
+            document.getElementById('sendBtn').click();
+        }
+
+        document.getElementById('sendBtn').addEventListener('click', function() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add user message
+            const userTemplate = document.getElementById('userTemplate').cloneNode(true);
+            userTemplate.classList.remove('hidden');
+            userTemplate.querySelector('.answer-text').textContent = message;
+            document.getElementById('chatContainer').appendChild(userTemplate);
+
+            // Clear input
+            input.value = '';
+            this.disabled = true;
+            input.disabled = true;
+
+            // Show typing
+            document.getElementById('typingIndicator').classList.remove('hidden');
+
+            // Simulate bot response
+            setTimeout(() => {
+                document.getElementById('typingIndicator').classList.add('hidden');
+                currentQuestion++;
+                
+                if (currentQuestion < questions.length) {
+                    addBotQuestion(questions[currentQuestion], currentQuestion + 1);
+                } else {
+                    addBotFinalMessage();
+                }
+            }, 1500);
+        });
+
+        function addBotQuestion(question, number) {
+            const chatContainer = document.getElementById('chatContainer');
+            const botDiv = document.createElement('div');
+            botDiv.className = 'flex items-start space-x-3';
+            botDiv.innerHTML = `
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-sm">M</span>
+                </div>
+                <div class="bg-bot p-4 rounded-2xl rounded-bl-sm max-w-3xl">
+                    <p><strong>Question ${number} of 5:</strong></p>
+                    <p class="mt-2">${question}</p>
+                </div>
+            `;
+            chatContainer.appendChild(botDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Reset input
+            document.getElementById('messageInput').disabled = false;
+            document.getElementById('sendBtn').disabled = false;
+        }
+
+        function addBotFinalMessage() {
+            const chatContainer = document.getElementById('chatContainer');
+            const botDiv = document.createElement('div');
+            botDiv.className = 'flex items-start space-x-3';
+            botDiv.innerHTML = `
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white font-bold text-sm">M</span>
+                </div>
+                <div class="bg-bot p-4 rounded-2xl rounded-bl-sm max-w-3xl">
+                    <p>Thank you! I have all the information I need. Let's generate your report.</p>
+                    <button onclick="window.location.href='results.html'" 
+                        class="mt-4 bg-primary text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-600 transition">
+                        View Results
+                    </button>
+                </div>
+            `;
+            chatContainer.appendChild(botDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Update progress
+            document.querySelector('.text-gray-500').textContent = "Complete";
+        }
+
+        // Enter key support
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('sendBtn').click();
+            }
+        });
+    </script>
+</body>
+</html>

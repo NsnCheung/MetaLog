@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaLog - Homework Analysis for ASD Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .calm-gradient { background: linear-gradient(135deg, #E8F4FD 0%, #F0F9F4 100%); }
+        .soft-shadow { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .autism-friendly-border { border: 2px solid #D1E8FF; }
+        .text-primary { color: #2C5282; }
+        .bg-primary { background-color: #4A90E2; }
+        .bg-secondary { background-color: #7ED321; }
+        .text-secondary { color: #2F855A; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-white soft-shadow sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">M</span>
+                    </div>
+                    <h1 class="text-2xl font-semibold text-primary">MetaLog</h1>
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-primary font-medium">Features</a>
+                    <a href="#how" class="text-gray-600 hover:text-primary font-medium">How It Works</a>
+                    <a href="#privacy" class="text-gray-600 hover:text-primary font-medium">Privacy</a>
+                </div>
+                <a href="upload.html" class="bg-primary text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-600 transition">
+                    Get Started
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="calm-gradient py-20 md:py-32">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-6xl font-bold text-primary mb-6 leading-tight">
+                Understanding Learning Through<br>Homework Patterns
+            </h2>
+            <p class="text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
+                A supportive tool that analyzes homework habits to help identify potential learning differences,
+                providing insights for parents and educators in a safe, private environment.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="window.location.href='upload.html'" 
+                    class="bg-primary text-white px-8 py-4 rounded-xl text-lg font-semibold hover-lift">
+                    Start Analysis
+                </button>
+                <button class="border-2 border-primary text-primary px-8 py-4 rounded-xl text-lg font-semibold hover:bg-blue-50 transition">
+                    Learn More
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- How It Works -->
+    <section id="how" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h3 class="text-3xl font-bold text-center text-primary mb-16">Simple 3-Step Process</h3>
+            <div class="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+                <div class="text-center hover-lift p-8 rounded-2xl bg-gray-50 autism-friendly-border">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-primary">1</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-primary mb-4">Upload or Record</h4>
+                    <p class="text-gray-600">Share homework files or record the process with camera. All data stays private.</p>
+                </div>
+                <div class="text-center hover-lift p-8 rounded-2xl bg-gray-50 autism-friendly-border">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-secondary">2</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-secondary mb-4">Chat with Our Assistant</h4>
+                    <p class="text-gray-600">Answer a few friendly questions about the homework session.</p>
+                </div>
+                <div class="text-center hover-lift p-8 rounded-2xl bg-gray-50 autism-friendly-border">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-purple-700">3</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-purple-700 mb-4">Get Insights</h4>
+                    <p class="text-gray-600">Receive a comprehensive report with helpful next steps and resources.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h3 class="text-3xl font-bold text-center text-primary mb-16">Designed for Comfort</h3>
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="flex items-start space-x-4 p-6 bg-white rounded-2xl autism-friendly-border">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-primary mb-2">Gentle Visual Design</h4>
+                        <p class="text-gray-600">Calming colors and predictable layouts reduce visual stress.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4 p-6 bg-white rounded-2xl autism-friendly-border">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-primary mb-2">Full Privacy Control</h4>
+                        <p class="text-gray-600">Your data is encrypted and never shared. Delete anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-primary">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-3xl font-bold text-white mb-6">Ready to Start?</h3>
+            <p class="text-blue-100 mb-8 text-lg">Begin the analysis in a safe, supportive environment.</p>
+            <button onclick="window.location.href='upload.html'" 
+                class="bg-white text-primary px-8 py-4 rounded-xl text-lg font-semibold hover-lift">
+                Begin Analysis
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="mb-4">© 2024 MetaLog. Built for Hackathon.</p>
+            <p class="text-sm">This tool is for educational purposes only and not a medical diagnosis.</p>
+        </div>
+    </footer>
+</body>
+</html>
