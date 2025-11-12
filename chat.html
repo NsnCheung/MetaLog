@@ -102,8 +102,8 @@
         <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 sticky bottom-0">
             <div class="flex items-end space-x-3">
                 <input type="text" id="messageInput" placeholder="Type your answer here..." 
-                    class="flex-1 outline-none text-lg py-2 px-3" disabled>
-                <button id="sendBtn" class="bg-primary text-white px-6 py-2 rounded-xl font-medium hover:bg-blue-600 transition disabled:bg-gray-400" disabled>
+                    class="flex-1 outline-none text-lg py-2 px-3">
+                <button id="sendBtn" class="bg-primary text-white px-6 py-2 rounded-xl font-medium hover:bg-blue-600 transition disabled:bg-gray-400">
                     Send
                 </button>
             </div>
@@ -130,31 +130,8 @@
             const message = input.value.trim();
             if (!message) return;
 
-            // Add user message
-            const userTemplate = document.getElementById('userTemplate').cloneNode(true);
-            userTemplate.classList.remove('hidden');
-            userTemplate.querySelector('.answer-text').textContent = message;
-            document.getElementById('chatContainer').appendChild(userTemplate);
-
-            // Clear input
-            input.value = '';
-            this.disabled = true;
-            input.disabled = true;
-
-            // Show typing
-            document.getElementById('typingIndicator').classList.remove('hidden');
-
-            // Simulate bot response
-            setTimeout(() => {
-                document.getElementById('typingIndicator').classList.add('hidden');
-                currentQuestion++;
-                
-                if (currentQuestion < questions.length) {
-                    addBotQuestion(questions[currentQuestion], currentQuestion + 1);
-                } else {
-                    addBotFinalMessage();
-                }
-            }, 1500);
+            // Redirect to results page to show mock report
+            window.location.href = 'results.html';
         });
 
         function addBotQuestion(question, number) {
